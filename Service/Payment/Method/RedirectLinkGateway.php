@@ -1,8 +1,9 @@
 <?php
 
-namespace Plugin\OnepagePayment\Service\Payment\Method;
+namespace Plugin\Onepay\Service\Payment\Method;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Eccube\Service\Payment\PaymentMethodInterface;
 use Eccube\Service\Payment\PaymentResult;
 use Eccube\Service\Payment\PaymentDispatcher;
@@ -10,7 +11,7 @@ use Eccube\Repository\Master\OrderStatusRepository;
 use Eccube\Service\PurchaseFlow\PurchaseFlow;
 use Eccube\Entity\Master\OrderStatus;
 use Eccube\Service\PurchaseFlow\PurchaseContext;
-use Plugin\OnepagePayment\Repository\ConfigRepository;
+use Plugin\Onepay\Repository\ConfigRepository;
 
 abstract class RedirectLinkGateway implements PaymentMethodInterface
 {
@@ -130,5 +131,13 @@ abstract class RedirectLinkGateway implements PaymentMethodInterface
      * @return string
      */
     abstract public function getCallUrl();
+
+    /**
+     * Handle response via Request object
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    abstract public function handleRequest(Request $request);
 }
 

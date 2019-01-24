@@ -17,21 +17,36 @@ class ConfigType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('call_url', TextType::class, [
-                'label' => trans('onepay.config.call_url.label'),
-                'required' => true
+        $builder
+            ->add('credit_call_url', TextType::class, [
+                'label' => trans('onepay.config.call_url.label')
             ])
-            ->add('callback_url', TextType::class, [
-                'label' => trans('onepay.config.callback_url.label'),
-                'required' => true
+            ->add('credit_callback_url', TextType::class, [
+                'label' => trans('onepay.config.callback_url.label')
             ])
-            ->add('merchant_id', TextType::class, [
-                'label' => trans('onepay.config.merchant_id.label'),
-                'required' => true
+            ->add('credit_merchant_id', TextType::class, [
+                'label' => trans('onepay.config.merchant_id.label')
             ])
-            ->add('merchant_access_code', TextType::class, [
-                'label' => trans('onepay.config.merchant_access_code.label'),
-                'required' => true
+            ->add('credit_merchant_access_code', TextType::class, [
+                'label' => trans('onepay.config.merchant_access_code.label')
+            ])
+            ->add('credit_secret', TextType::class, [
+                'label' => trans('onepay.config.secret.label')
+            ])
+            ->add('domestic_call_url', TextType::class, [
+                'label' => trans('onepay.config.call_url.label')
+            ])
+            ->add('domestic_callback_url', TextType::class, [
+                'label' => trans('onepay.config.callback_url.label')
+            ])
+            ->add('domestic_merchant_id', TextType::class, [
+                'label' => trans('onepay.config.merchant_id.label')
+            ])
+            ->add('domestic_merchant_access_code', TextType::class, [
+                'label' => trans('onepay.config.merchant_access_code.label')
+            ])
+            ->add('domestic_secret', TextType::class, [
+                'label' => trans('onepay.config.secret.label')
             ]);
     }
 

@@ -1,9 +1,9 @@
 {
-    "name": "Onepage Payment",
+    "name": "Onepay Payment Gateway",
     "type": "eccube-plugin",
-    "description": "Onepage Payment",
+    "description": "Onepay Payment Gateway",
     "version": "1.0.0",
     "extra": {
-        "code": "OnepagePayment"
+        "code": "Onepay"
     }
 }

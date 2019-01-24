@@ -1,9 +1,9 @@
 <?php
-namespace Plugin\OnepagePayment\Repository;
+namespace Plugin\Onepay\Repository;
 
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Eccube\Repository\AbstractRepository;
-use Plugin\OnepagePayment\Entity\Config;
+use Plugin\Onepay\Entity\Config;
 
 class ConfigRepository extends AbstractRepository
 {
