@@ -213,18 +213,18 @@ class Config
      */
     public function getDomesticSecret()
     {
-        return $this->creditSecret;
+        return $this->domesticSecret;
     }
 
     /**
-     * Set $creditSecret
+     * Set $domesticSecret
      *
-     * @param $creditSecret
+     * @param $domesticSecret
      * @return $this
      */
-    public function setDomesticSecret($creditSecret)
+    public function setDomesticSecret($domesticSecret)
     {
-        $this->creditSecret = $creditSecret;
+        $this->domesticSecret = $domesticSecret;
         return $this;
     }
 
@@ -235,18 +235,18 @@ class Config
      */
     public function getDomesticCallUrl()
     {
-        return $this->creditCallUrl;
+        return $this->domesticCallbackUrl;
     }
 
     /**
-     * Set $creditCallUrl
+     * Set $domesticCallUrl
      *
-     * @param $creditCallUrl
+     * @param $domesticCallUrl
      * @return $this
      */
-    public function setDomesticCallUrl($creditCallUrl)
+    public function setDomesticCallUrl($domesticCallUrl)
     {
-        $this->creditCallUrl = $creditCallUrl;
+        $this->domesticCallUrl = $domesticCallUrl;
         return $this;
     }
 
@@ -257,62 +257,62 @@ class Config
      */
     public function getDomesticCallbackUrl()
     {
-        return $this->creditCallbackUrl;
+        return $this->domesticCallbackUrl;
     }
 
     /**
-     * Set $creditCallbackUrl
+     * Set $domesticCallbackUrl
      *
-     * @param $creditCallbackUrl
+     * @param $domesticCallbackUrl
      * @return $this
      */
-    public function setDomesticCallbackUrl($creditCallbackUrl)
+    public function setDomesticCallbackUrl($domesticCallbackUrl)
     {
-        $this->creditCallbackUrl = $creditCallbackUrl;
+        $this->domesticCallbackUrl = $domesticCallbackUrl;
         return $this;
     }
 
     /**
-     * Get $creditMerchantId
+     * Get $domesticMerchantId
      *
      * @return string
      */
     public function getDomesticMerchantId()
     {
-        return $this->creditMerchantId;
+        return $this->domesticMerchantId;
     }
 
     /**
-     * Set $creditMerchantId
+     * Set $domesticMerchantId
      *
-     * @param $creditMerchantId
+     * @param $domesticMerchantId
      * @return $this
      */
-    public function setDomesticMerchantId($creditMerchantId)
+    public function setDomesticMerchantId($domesticMerchantId)
     {
-        $this->creditMerchantId = $creditMerchantId;
+        $this->domesticMerchantId = $domesticMerchantId;
         return $this;
     }
 
     /**
-     * Get $creditMerchantAccessCode
+     * Get $domesticMerchantAccessCode
      *
      * @return string
      */
     public function getDomesticMerchantAccessCode()
     {
-        return $this->creditMerchantAccessCode;
+        return $this->domesticMerchantAccessCode;
     }
 
     /**
-     * Set $creditMerchantAccessCode
+     * Set $domesticMerchantAccessCode
      *
-     * @param $creditMerchantAccessCode
+     * @param $domesticMerchantAccessCode
      * @return $this
      */
-    public function setDomesticMerchantAccessCode($creditMerchantAccessCode)
+    public function setDomesticMerchantAccessCode($domesticMerchantAccessCode)
     {
-        $this->creditMerchantAccessCode = $creditMerchantAccessCode;
+        $this->domesticMerchantAccessCode = $domesticMerchantAccessCode;
         return $this;
     }
 }
