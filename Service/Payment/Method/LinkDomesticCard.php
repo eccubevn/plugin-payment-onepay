@@ -179,8 +179,8 @@ class LinkDomesticCard extends RedirectLinkGateway
         $Config = $this->configRepository->get();
         $params = $request->query->all();
 
-        if (isset($params['vpc_SecureHash']) && strlen($Config->getCreditSecret()) > 0 && strlen($params["vpc_TxnResponseCode"]) && $params["vpc_TxnResponseCode"] != "7") {
-            if (strtoupper($params['vpc_SecureHash']) == $this->getSecureHash($params, $Config->getCreditSecret())) {
+        if (isset($params['vpc_SecureHash']) && strlen($Config->getDomesticSecret()) > 0 && strlen($params["vpc_TxnResponseCode"]) && $params["vpc_TxnResponseCode"] != "7") {
+            if (strtoupper($params['vpc_SecureHash']) == $this->getSecureHash($params, $Config->getDomesticSecret())) {
                 $hashValidated = "CORRECT";
             } else {
                 $hashValidated = "INVALID HASH";
