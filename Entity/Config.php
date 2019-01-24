@@ -235,7 +235,7 @@ class Config
      */
     public function getDomesticCallUrl()
     {
-        return $this->domesticCallbackUrl;
+        return $this->domesticCallUrl;
     }
 
     /**
