@@ -1,0 +1,9 @@
+{
+    "name": "Onepage Payment",
+    "type": "eccube-plugin",
+    "description": "Onepage Payment",
+    "version": "1.0.0",
+    "extra": {
+        "code": "OnepagePayment"
+    }
+}
