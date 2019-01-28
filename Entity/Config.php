@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="plg_onepay_config")
- * @ORM\Entity(repositoryClass="Plugin\OnepagePayment\Repository\ConfigRepository")
+ * @ORM\Entity(repositoryClass="Plugin\Onepay\Repository\ConfigRepository")
  */
 class Config
 {
@@ -35,13 +35,6 @@ class Config
     /**
      * @var string
      *
-     * @ORM\Column(name="credit_callback_url", type="string", length=1024, nullable=true)
-     */
-    protected $creditCallbackUrl;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="credit_merchant_id", type="string", length=1024, nullable=true)
      */
     protected $creditMerchantId;
@@ -66,13 +59,6 @@ class Config
      * @ORM\Column(name="domestic_call_url", type="string", length=1024, nullable=true)
      */
     protected $domesticCallUrl;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="domestic_callback_url", type="string", length=1024, nullable=true)
-     */
-    protected $domesticCallbackUrl;
 
     /**
      * @var string
@@ -137,28 +123,6 @@ class Config
     public function setCreditCallUrl($creditCallUrl)
     {
         $this->creditCallUrl = $creditCallUrl;
-        return $this;
-    }
-
-    /**
-     * Get $creditCallbackUrl
-     *
-     * @return string
-     */
-    public function getCreditCallbackUrl()
-    {
-        return $this->creditCallbackUrl;
-    }
-
-    /**
-     * Set $creditCallbackUrl
-     *
-     * @param $creditCallbackUrl
-     * @return $this
-     */
-    public function setCreditCallbackUrl($creditCallbackUrl)
-    {
-        $this->creditCallbackUrl = $creditCallbackUrl;
         return $this;
     }
 
@@ -247,28 +211,6 @@ class Config
     public function setDomesticCallUrl($domesticCallUrl)
     {
         $this->domesticCallUrl = $domesticCallUrl;
-        return $this;
-    }
-
-    /**
-     * Get $creditCallbackUrl
-     *
-     * @return string
-     */
-    public function getDomesticCallbackUrl()
-    {
-        return $this->domesticCallbackUrl;
-    }
-
-    /**
-     * Set $domesticCallbackUrl
-     *
-     * @param $domesticCallbackUrl
-     * @return $this
-     */
-    public function setDomesticCallbackUrl($domesticCallbackUrl)
-    {
-        $this->domesticCallbackUrl = $domesticCallbackUrl;
         return $this;
     }
 

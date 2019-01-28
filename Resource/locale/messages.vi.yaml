@@ -7,3 +7,47 @@ onepay.config.merchant_access_code.label: "Mã truy cập"
 onepay.config.secret.label: "Mã bí mật"
 onepay.admin.config.title: "Phương thức thanh toán Onepay"
 onepay.admin.config.sub_title: "Tùy chỉnh"
+
+onepay.response.credit.msg.Transaction_Successful: Giao dịch thành công
+onepay.response.credit.msg.Transaction_status_is_unknown: Tình trạng giao dịch không xác định
+onepay.response.credit.msg.Bank_system_reject: Hệ thống ngân hàng từ chối
+onepay.response.credit.msg.Bank_Declined_Transaction: Giao dịch ngân hàng bị từ chối
+onepay.response.credit.msg.No_Reply_from_Bank: Không có trả lời từ ngân hàng
+onepay.response.credit.msg.Expired_Card: Thẻ hết hạn
+onepay.response.credit.msg.Insufficient_funds: Không đủ tiền
+onepay.response.credit.msg.Error_Communicating_with_Bank: Lỗi giao tiếp với ngân hàng
+onepay.response.credit.msg.Payment_Server_System_Error: Lỗi hệ thống máy chủ thanh toán
+onepay.response.credit.msg.Transaction_Type_Not_Supported: Loại giao dịch không được hỗ trợ
+onepay.response.credit.msg.Bank_declined_transaction_Do_not_contact_Bank: Ngân hàng bị từ chối giao dịch (Không liên hệ với Ngân hàng)
+onepay.response.credit.msg.Transaction_Aborted: Đã hủy giao dịch
+onepay.response.credit.msg.Transaction_Cancelled: Hủy giao dịch
+onepay.response.credit.msg.Deferred_transaction_has_been_received_and_is_awaiting_processing: Giao dịch hoãn lại đã được nhận và đang chờ xử lý
+onepay.response.credit.msg.3D_Secure_Authentication_failed: Xác thực bảo mật 3D không thành công
+onepay.response.credit.msg.Card_Security_Code_verification_failed: Xác minh mã bảo mật thẻ không thành công
+onepay.response.credit.msg.Shopping_Transaction_Locked_Please_try_the_transaction_again_later: Giao dịch mua sắm bị khóa (Vui lòng thử lại giao dịch sau)
+onepay.response.credit.msg.Cardholder_is_not_enrolled_in_Authentication_scheme: Chủ thẻ không được đăng ký trong chương trình Xác thực
+onepay.response.credit.msg.Transaction_has_been_received_by_the_Payment_Adaptor_and_is_being_processed: Giao dịch đã được nhận bởi Bộ điều hợp thanh toán và đang được xử lý
+onepay.response.credit.msg.Transaction_was_not_processed__Reached_limit_of_retry_attempts_allowed: Giao dịch không được xử lý - Đã đạt đến giới hạn thử lại cho phép
+onepay.response.credit.msg.Duplicate_SessionID_OrderInfo: ID phiên trùng lặp (Thông tin đặt hàng)
+onepay.response.credit.msg.Address_Verification_Failed: Xác minh địa chỉ không thành công
+onepay.response.credit.msg.Card_Security_Code_Failed: Mã bảo mật thẻ không thành công
+onepay.response.credit.msg.Address_Verification_and_Card_Security_Code_Failed: Xác minh địa chỉ và mã bảo mật thẻ không thành công
+onepay.response.credit.msg.User_Cancel: Bạn đã hủy giao dịch thanh toán
+onepay.response.credit.msg.Unable_to_be_determined: Không thể xác định
+
+onepay.response.domestic.msg.Approved: Giao dịch thành công
+onepay.response.domestic.msg.Bank_Declined: Ngân hàng từ chối giao dịch
+onepay.response.domestic.msg.Merchant_not_exist: Mã đơn vị không tồn tại
+onepay.response.domestic.msg.Invalid_access_code: Không đúng access code
+onepay.response.domestic.msg.Invalid_amount: Số tiền không hợp lệ
+onepay.response.domestic.msg.Invalid_currency code: Mã tiền tệ không tồn tại
+onepay.response.domestic.msg.Unspecified_Failure: Lỗi không xác định
+onepay.response.domestic.msg.Invalid_card_Number: Số thẻ không đúng
+onepay.response.domestic.msg.Invalid_card_name: Tên chủ thẻ không đúng
+onepay.response.domestic.msg.Expired_Card: Thẻ hết hạn hoặc đang bị khóa
+onepay.response.domestic.msg.Card_Not_Registed_Service_internet_banking: Thẻ chưa đăng ký sử dụng dịch vụ
+onepay.response.domestic.msg.Invalid_card_date: Ngày phát hành/hết hạn không đúng
+onepay.response.domestic.msg.Exist_Amount: Vượt quá hạn mức thanh toán
+onepay.response.domestic.msg.Insufficient_fund: Số tiền không đủ để thanh toán
+onepay.response.domestic.msg.User_cancel: Bạn đã hủy giao dịch thanh toán
+onepay.response.domestic.msg.Failured: Giao dịch thất bại

@@ -2,6 +2,7 @@
 namespace Plugin\Onepay\Service\Payment\Method;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class LinkDomesticCard extends RedirectLinkGateway
 {
@@ -46,10 +47,10 @@ class LinkDomesticCard extends RedirectLinkGateway
             'vpc_MerchTxnRef' => $this->getTransactionId(), // transaction id
             'vpc_OrderInfo' => $this->getOrderInfo(),
             'vpc_Amount' => $this->Order->getTotal() * 100,
-            'vpc_ReturnURL' => $Config->getDomesticCallbackUrl(),
+            'vpc_ReturnURL' => $this->container->get('router')->generate('onepay_back', [], UrlGeneratorInterface::ABSOLUTE_URL),
             'vpc_Version' => '2',
             'vpc_Command' => 'pay',
-            'vpc_Locale' => 'en',
+            'vpc_Locale' => 'vn',
             'vpc_TicketNo' => $_SERVER['REMOTE_ADDR'],
             'vpc_Currency' => 'VND',
             'AgainLink' => urlencode($_SERVER['HTTP_REFERER']),
@@ -99,56 +100,61 @@ class LinkDomesticCard extends RedirectLinkGateway
     {
         switch ($responseCode) {
             case "0" :
-                $result = "Giao dịch thành công - Approved";
+                $result = "onepay.response.domestic.msg.Approved";
                 break;
             case "1" :
-                $result = "Ngân hàng từ chối giao dịch - Bank Declined";
+                $result = "onepay.response.domestic.msg.Bank_Declined";
                 break;
             case "3" :
-                $result = "Mã đơn vị không tồn tại - Merchant not exist";
+                $result = "onepay.response.domestic.msg.Merchant_not_exist";
                 break;
             case "4" :
-                $result = "Không đúng access code - Invalid access code";
+                $result = "onepay.response.domestic.msg.Invalid_access_code";
                 break;
             case "5" :
-                $result = "Số tiền không hợp lệ - Invalid amount";
+                $result = "onepay.response.domestic.msg.Invalid_amount";
                 break;
             case "6" :
-                $result = "Mã tiền tệ không tồn tại - Invalid currency code";
+                $result = "onepay.response.domestic.msg.Invalid_currency";
                 break;
             case "7" :
-                $result = "Lỗi không xác định - Unspecified Failure ";
+                $result = "onepay.response.domestic.msg.Unspecified_Failure";
                 break;
             case "8" :
-                $result = "Số thẻ không đúng - Invalid card Number";
+                $result = "onepay.response.domestic.msg.Invalid_card_Number";
                 break;
             case "9" :
-                $result = "Tên chủ thẻ không đúng - Invalid card name";
+                $result = "onepay.response.domestic.msg.Invalid_card_name";
                 break;
             case "10" :
-                $result = "Thẻ hết hạn/Thẻ bị khóa - Expired Card";
+                $result = "onepay.response.domestic.msg.Expired_Card";
                 break;
             case "11" :
-                $result = "Thẻ chưa đăng ký sử dụng dịch vụ - Card Not Registed Service(internet banking)";
+                $result = "onepay.response.domestic.msg.Card_Not_Registed_Service_internet_banking";
                 break;
             case "12" :
-                $result = "Ngày phát hành/Hết hạn không đúng - Invalid card date";
+                $result = "onepay.response.domestic.msg.Invalid_card_date";
                 break;
             case "13" :
-                $result = "Vượt quá hạn mức thanh toán - Exist Amount";
+                $result = "onepay.response.domestic.msg.Exist_Amount";
                 break;
             case "21" :
-                $result = "Số tiền không đủ để thanh toán - Insufficient fund";
+                $result = "onepay.response.domestic.msg.Insufficient_fund";
                 break;
             case "99" :
-                $result = "Người sủ dụng hủy giao dịch - User cancel";
+                $result = "onepay.response.domestic.msg.User_cancel";
                 break;
             default :
-                $result = "Giao dịch thất bại - Failured";
+                $result = "onepay.response.domestic.msg.Failured";
         }
         return $result;
     }
 
+    /**
+     * @param $params
+     * @param string $secret
+     * @return string
+     */
     public function getSecureHash($params, $secret = '')
     {
         $md5HashData = "";
@@ -178,13 +184,14 @@ class LinkDomesticCard extends RedirectLinkGateway
         /** @var \Plugin\Onepay\Entity\Config $Config */
         $Config = $this->configRepository->get();
         $params = $request->query->all();
-
+        log_info('Onepay return', $params);
         if (isset($params['vpc_SecureHash']) && strlen($Config->getDomesticSecret()) > 0 && strlen($params["vpc_TxnResponseCode"]) && $params["vpc_TxnResponseCode"] != "7") {
             if (strtoupper($params['vpc_SecureHash']) == $this->getSecureHash($params, $Config->getDomesticSecret())) {
                 $hashValidated = "CORRECT";
             } else {
                 $hashValidated = "INVALID HASH";
             }
+
         } else {
             $hashValidated = "INVALID HASH";
         }
@@ -192,9 +199,10 @@ class LinkDomesticCard extends RedirectLinkGateway
         $result = [
             'message' => $this->getResponseCodeDescription($params['vpc_TxnResponseCode'])
         ];
-        if ($hashValidated=="CORRECT" && $params['vpc_TxnResponseCode']==="0") {
+
+        if ($hashValidated == "CORRECT" && $params['vpc_TxnResponseCode'] === "0") {
             $result['status'] = 'success';
-        } elseif ($hashValidated=="INVALID HASH" && $params['vpc_TxnResponseCode']==="0") {
+        } elseif ($hashValidated == "INVALID HASH" && $params['vpc_TxnResponseCode'] === "0") {
             $result['status'] = 'pending';
         } else {
             $result['status'] = 'error';
