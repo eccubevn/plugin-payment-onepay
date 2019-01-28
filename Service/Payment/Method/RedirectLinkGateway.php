@@ -50,28 +50,21 @@ abstract class RedirectLinkGateway implements PaymentMethodInterface
 
     /**
      * RedirectLinkGateway constructor.
-     *
-     * @param \Eccube\Entity\Order $Order
-     * @param \Symfony\Component\Form\FormInterface $form
      * @param OrderStatusRepository $orderStatusRepository
-     * @param PurchaseFlow $purchaseFlow
+     * @param PurchaseFlow $shoppingPurchaseFlow
      * @param ConfigRepository $configRepository
      * @param EccubeConfig $eccubeConfig
      * @param ContainerInterface $container
      */
     public function __construct(
-        \Eccube\Entity\Order $Order,
-        \Symfony\Component\Form\FormInterface $form,
         OrderStatusRepository $orderStatusRepository,
-        PurchaseFlow $purchaseFlow,
+        PurchaseFlow $shoppingPurchaseFlow,
         ConfigRepository $configRepository,
         EccubeConfig $eccubeConfig,
         ContainerInterface $container
     ) {
-        $this->Order = $Order;
-        $this->form = $form;
         $this->orderStatusRepository = $orderStatusRepository;
-        $this->purchaseFlow = $purchaseFlow;
+        $this->purchaseFlow = $shoppingPurchaseFlow;
         $this->configRepository = $configRepository;
         $this->eccubeConfig = $eccubeConfig;
         $this->container = $container;
