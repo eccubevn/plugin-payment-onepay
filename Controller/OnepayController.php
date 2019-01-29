@@ -1,8 +1,9 @@
 <?php
 namespace Plugin\Onepay\Controller;
 
+use Plugin\Onepay\Entity\PaidLogs;
+use Plugin\Onepay\Repository\PaidLogsRepository;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Eccube\Controller\AbstractController;
@@ -35,6 +36,9 @@ class OnepayController extends AbstractController
      */
     protected $orderStateMachine;
 
+    /** @var PaidLogsRepository */
+    protected $paidLogsRepository;
+
     /**
      * OnepayController constructor.
      *
@@ -42,18 +46,22 @@ class OnepayController extends AbstractController
      * @param OrderRepository $orderRepository
      * @param OrderStatusRepository $orderStatusRepository
      * @param OrderStateMachine $orderStateMachine
+     * @param PaidLogsRepository $paidLogsRepository
      */
     public function __construct(
         CartService $cartService,
         OrderRepository $orderRepository,
         OrderStatusRepository $orderStatusRepository,
-        OrderStateMachine $orderStateMachine
+        OrderStateMachine $orderStateMachine,
+        PaidLogsRepository $paidLogsRepository
     ) {
-        $this->orderStatusRepository = $orderStatusRepository;
-        $this->orderStateMachine = $orderStateMachine;
         $this->cartService = $cartService;
         $this->orderRepository = $orderRepository;
+        $this->orderStatusRepository = $orderStatusRepository;
+        $this->orderStateMachine = $orderStateMachine;
+        $this->paidLogsRepository = $paidLogsRepository;
     }
+
 
     /**
      * @Route("/onepay/back", name="onepay_back")
@@ -67,6 +75,8 @@ class OnepayController extends AbstractController
         if (!$Order instanceof Order) {
             throw new NotFoundHttpException();
         }
+
+        $this->paidLogsRepository->saveLogs($Order, $request);
 
         if ($this->getUser() != $Order->getCustomer()) {
             throw new NotFoundHttpException();

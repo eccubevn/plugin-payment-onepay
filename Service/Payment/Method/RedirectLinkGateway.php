@@ -2,6 +2,8 @@
 
 namespace Plugin\Onepay\Service\Payment\Method;
 
+use Eccube\Common\EccubeConfig;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Eccube\Service\Payment\PaymentMethodInterface;
@@ -40,20 +42,32 @@ abstract class RedirectLinkGateway implements PaymentMethodInterface
      */
     protected $configRepository;
 
+    /** @var EccubeConfig */
+    protected $eccubeConfig;
+
+    /** @var ContainerInterface */
+    protected $container;
+
     /**
      * RedirectLinkGateway constructor.
      * @param OrderStatusRepository $orderStatusRepository
      * @param PurchaseFlow $shoppingPurchaseFlow
      * @param ConfigRepository $configRepository
+     * @param EccubeConfig $eccubeConfig
+     * @param ContainerInterface $container
      */
     public function __construct(
         OrderStatusRepository $orderStatusRepository,
         PurchaseFlow $shoppingPurchaseFlow,
-        ConfigRepository $configRepository
+        ConfigRepository $configRepository,
+        EccubeConfig $eccubeConfig,
+        ContainerInterface $container
     ) {
         $this->orderStatusRepository = $orderStatusRepository;
         $this->purchaseFlow = $shoppingPurchaseFlow;
         $this->configRepository = $configRepository;
+        $this->eccubeConfig = $eccubeConfig;
+        $this->container = $container;
     }
 
     /**
