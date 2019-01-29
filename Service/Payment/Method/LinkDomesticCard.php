@@ -32,7 +32,6 @@ class LinkDomesticCard extends RedirectLinkGateway
     {
         $vpcURL = $this->OnepayConfig->getDomesticCallUrl() . "?";
         $params = $this->getParameters();
-
         $appendAmp = 0;
         foreach($params as $key => $value) {
             if (strlen($value) > 0) {
@@ -68,7 +67,7 @@ class LinkDomesticCard extends RedirectLinkGateway
             'vpc_Locale' => 'vn',
             'vpc_TicketNo' => $_SERVER['REMOTE_ADDR'],
             'vpc_Currency' => 'VND',
-            'AgainLink' => isset($_SERVER['HTTP_REFERER']) ? urlencode($_SERVER['HTTP_REFERER']): null,
+            'AgainLink' => isset($_SERVER['HTTP_REFERER']) ? urlencode($_SERVER['HTTP_REFERER']) : null,
             'Title' => 'VPC 3-Party',
             'AVS_Street01' => $this->Order->getAddr02(),
             'AVS_City' => $this->Order->getPref() ? $this->Order->getPref()->getName() : '',

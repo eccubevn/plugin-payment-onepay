@@ -66,7 +66,7 @@ class LinkCreditCard extends RedirectLinkGateway
             'vpc_Command' => 'pay',
             'vpc_Locale' => 'en',
             'vpc_TicketNo' => $_SERVER['REMOTE_ADDR'],
-            'AgainLink' => isset($_SERVER['HTTP_REFERER']) ? urlencode($_SERVER['HTTP_REFERER']): null,
+            'AgainLink' => isset($_SERVER['HTTP_REFERER']) ? urlencode($_SERVER['HTTP_REFERER']) : null,
             'Title' => 'VPC 3-Party',
             'AVS_Street01' => $this->Order->getAddr02(),
             'AVS_City' => $this->Order->getPref() ? $this->Order->getPref()->getName() : '',

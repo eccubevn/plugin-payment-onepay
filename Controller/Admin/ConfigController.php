@@ -80,8 +80,8 @@ class ConfigController extends AbstractController
 
         return [
             'form' => $form->createView(),
-            'urlCheckCredit' => $urlCheck = $this->creditCard->checkConn($Config),
-            'urlCheckDomestic' => $urlCheck = $this->domesticCard->checkConn($Config),
+            'urlCheckCredit' => $this->creditCard->checkConn($Config),
+            'urlCheckDomestic' => $this->domesticCard->checkConn($Config),
         ];
     }
 
@@ -91,18 +91,18 @@ class ConfigController extends AbstractController
      * @param Request $request
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function backError(Request $request)
+    public function checkConfig(Request $request)
     {
         $orderId = intval($request->get('vpc_OrderInfo'));
 
-        if ($orderId != RedirectLinkGateway::DOMESTIC_CHECK_ORDER_ID) {
+        if ($orderId != RedirectLinkGateway::CREDIT_CHECK_ORDER_ID || $orderId != RedirectLinkGateway::DOMESTIC_CHECK_ORDER_ID) {
             throw new NotFoundHttpException();
         }
 
-        if ($orderId == RedirectLinkGateway::DOMESTIC_CHECK_ORDER_ID) {
-            $PaymentMethod = $this->container->get(LinkDomesticCard::class);
-        } else {
+        if ($orderId == RedirectLinkGateway::CREDIT_CHECK_ORDER_ID) {
             $PaymentMethod = $this->container->get(LinkCreditCard::class);
+        } else {
+            $PaymentMethod = $this->container->get(LinkDomesticCard::class);
         }
 
         $result = $PaymentMethod->handleRequest($request);

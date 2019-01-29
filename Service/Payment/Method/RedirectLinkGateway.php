@@ -19,11 +19,10 @@ use Plugin\Onepay\Repository\ConfigRepository;
 
 abstract class RedirectLinkGateway implements PaymentMethodInterface
 {
-    const DOMESTIC_CHECK_ORDER_ID = 99999999998;
-    const CREDIT_CHECK_ORDER_ID = 99999999999;
+    const CREDIT_CHECK_ORDER_ID     = 99999999999;
+    const DOMESTIC_CHECK_ORDER_ID   = 99999999998;
 
     protected $isCheck = false;
-    protected $configCheck;
 
     /**
      * @var \Eccube\Entity\Order
@@ -40,7 +39,9 @@ abstract class RedirectLinkGateway implements PaymentMethodInterface
      */
     protected $orderStatusRepository;
 
-    /** @var OrderRepository */
+    /**
+     * @var OrderRepository
+     */
     protected $orderRepository;
 
     /**
@@ -53,10 +54,14 @@ abstract class RedirectLinkGateway implements PaymentMethodInterface
      */
     protected $OnepayConfig;
 
-    /** @var EccubeConfig */
+    /**
+     * @var EccubeConfig
+     */
     protected $eccubeConfig;
 
-    /** @var ContainerInterface */
+    /**
+     * @var ContainerInterface
+     */
     protected $container;
 
     /**
