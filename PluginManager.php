@@ -93,7 +93,7 @@ class PluginManager extends AbstractPluginManager
             $Payment = new Payment();
             $Payment->setCharge(0);
             $Payment->setSortNo($sortNo);
-            $Payment->setVisible(true);
+            $Payment->setVisible(false);
             $Payment->setMethod('Thanh toán bằng thẻ quốc tế');
             $Payment->setMethodClass(LinkCreditCard::class);
         }
@@ -109,7 +109,7 @@ class PluginManager extends AbstractPluginManager
             $Payment = new Payment();
             $Payment->setCharge(0);
             $Payment->setSortNo($sortNo);
-            $Payment->setVisible(true);
+            $Payment->setVisible(false);
             $Payment->setMethod('Thanh toán bằng thẻ nội địa');
             $Payment->setMethodClass(LinkDomesticCard::class);
         }

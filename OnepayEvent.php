@@ -78,6 +78,11 @@ class OnepayEvent implements EventSubscriberInterface
             $formatter = new \NumberFormatter($locale, \NumberFormatter::CURRENCY);
 
             $paidLog['vpc_Amount'] = $formatter->formatCurrency($paidLog['vpc_Amount'] / 100, $currency);
+
+            if(isset($paidLog['AgainLink'])){
+                $paidLog['AgainLink'] = urldecode($paidLog['AgainLink']);
+            }
+
             $parameter['paidLog'] = $paidLog;
             $event->setParameters($parameter);
 
