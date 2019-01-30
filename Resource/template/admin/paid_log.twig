@@ -9,7 +9,7 @@
     <div class="card-header">
         <div class="row">
             <div class="col-4 col-sm-3 col-md-2">
-                <div class="d-inline-block"><span class="card-title">Thông tin thanh toán</span></div>
+                <div class="d-inline-block"><span class="card-title">{{ 'onepay.admin.order.title'|trans }}</span></div>
             </div>
             <div class="col-6 col-sm-6 col-md-8">
                 {{ payment.getMethod() }}
@@ -20,7 +20,6 @@
         </div>
     </div>
     <div class="collapse ec-cardCollapse h-adr" id="paidInformation">
-        <span class="p-country-name" style="display:none;">Japan</span>
         <div class="card-body">
             <div class="row">
                 <div class="col-12">

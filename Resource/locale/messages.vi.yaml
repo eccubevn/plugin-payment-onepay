@@ -7,6 +7,8 @@ onepay.config.merchant_access_code.label: "Mã truy cập"
 onepay.config.secret.label: "Mã bí mật"
 onepay.admin.config.title: "Phương thức thanh toán Onepay"
 onepay.admin.config.sub_title: "Tùy chỉnh"
+onepay.admin.order.title: "Thông tin thanh toán"
+onepay.admin.config.btn.trycheck: "Thử kiểm tra"
 
 onepay.response.credit.msg.Transaction_Successful: Giao dịch thành công
 onepay.response.credit.msg.Transaction_status_is_unknown: Tình trạng giao dịch không xác định

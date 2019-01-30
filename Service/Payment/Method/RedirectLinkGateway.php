@@ -3,6 +3,8 @@
 namespace Plugin\Onepay\Service\Payment\Method;
 
 use Eccube\Common\EccubeConfig;
+use Eccube\Repository\OrderRepository;
+use Plugin\Onepay\Entity\Config;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +19,11 @@ use Plugin\Onepay\Repository\ConfigRepository;
 
 abstract class RedirectLinkGateway implements PaymentMethodInterface
 {
+    const CREDIT_CHECK_ORDER_ID     = 99999999999;
+    const DOMESTIC_CHECK_ORDER_ID   = 99999999998;
+
+    protected $isCheck = false;
+
     /**
      * @var \Eccube\Entity\Order
      */
@@ -33,27 +40,38 @@ abstract class RedirectLinkGateway implements PaymentMethodInterface
     protected $orderStatusRepository;
 
     /**
+     * @var OrderRepository
+     */
+    protected $orderRepository;
+
+    /**
      * @var PurchaseFlow
      */
     protected $purchaseFlow;
 
     /**
-     * @var ConfigRepository
+     * @var Config
      */
-    protected $configRepository;
+    protected $OnepayConfig;
 
-    /** @var EccubeConfig */
+    /**
+     * @var EccubeConfig
+     */
     protected $eccubeConfig;
 
-    /** @var ContainerInterface */
+    /**
+     * @var ContainerInterface
+     */
     protected $container;
 
     /**
      * RedirectLinkGateway constructor.
+     *
      * @param OrderStatusRepository $orderStatusRepository
      * @param PurchaseFlow $shoppingPurchaseFlow
      * @param ConfigRepository $configRepository
      * @param EccubeConfig $eccubeConfig
+     * @param OrderRepository $orderRepository
      * @param ContainerInterface $container
      */
     public function __construct(
@@ -61,12 +79,14 @@ abstract class RedirectLinkGateway implements PaymentMethodInterface
         PurchaseFlow $shoppingPurchaseFlow,
         ConfigRepository $configRepository,
         EccubeConfig $eccubeConfig,
+        OrderRepository $orderRepository,
         ContainerInterface $container
     ) {
         $this->orderStatusRepository = $orderStatusRepository;
         $this->purchaseFlow = $shoppingPurchaseFlow;
-        $this->configRepository = $configRepository;
+        $this->OnepayConfig = $configRepository->get();
         $this->eccubeConfig = $eccubeConfig;
+        $this->orderRepository = $orderRepository;
         $this->container = $container;
     }
 
@@ -138,6 +158,14 @@ abstract class RedirectLinkGateway implements PaymentMethodInterface
         $this->Order = $Order;
         return $this;
     }
+
+    /**
+     * Check connect to Onepay input card page
+     *
+     * @param Config $Config
+     * @return mixed
+     */
+    abstract public function checkConn(Config $Config);
 
     /**
      * Generate url endpoint which will be redirect to process payment

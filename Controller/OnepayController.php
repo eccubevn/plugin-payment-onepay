@@ -36,7 +36,9 @@ class OnepayController extends AbstractController
      */
     protected $orderStateMachine;
 
-    /** @var PaidLogsRepository */
+    /**
+     * @var PaidLogsRepository
+     */
     protected $paidLogsRepository;
 
     /**
@@ -61,7 +63,6 @@ class OnepayController extends AbstractController
         $this->orderStateMachine = $orderStateMachine;
         $this->paidLogsRepository = $paidLogsRepository;
     }
-
 
     /**
      * @Route("/onepay/back", name="onepay_back")

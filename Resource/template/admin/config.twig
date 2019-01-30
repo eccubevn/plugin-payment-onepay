@@ -10,14 +10,66 @@
 {% block stylesheet %}
 
 {% endblock stylesheet %}
+{% block javascript %}
+    <script type='text/javascript'>
+        var cards = $('.c-primaryCol');
+        cards.find('input').each(function () {
+            if (!$.trim($(this).val())){
+                $(this).closest('.card').find('a.check').addClass('disabled');
+            }
+        });
+
+        cards.find('input[type="text"]').on('change', function (e) {
+            var conEls = $(this).closest('.card');
+            var checked = _checkNullInput(conEls);
+            if (checked === 0) {
+                _doGetUrl(conEls);
+            }else{
+                conEls.find('a.check').addClass('disabled');
+            }
+        });
+
+        function _checkNullInput(el) {
+            var _count = 0;
+            el.find('input[type="text"]').each(function () {
+                if (!$.trim($(this).val())) {
+                    _count++;
+                }
+            });
+
+            return _count;
+        }
+
+        function _doGetUrl(conEls) {
+            var _form = cards.closest('form');
+            if (conEls.hasClass('credit')) {
+                _form.find('input[name="typeCheckCard"]').val('credit');
+            } else {
+                _form.find('input[name="typeCheckCard"]').val('domestic');
+            }
+
+            $.ajax({
+                type: "POST",
+                url: _form.attr('action'),
+                data: _form.serialize(),
+                success: function (data) {
+                    if (data.error == false) {
+                        conEls.find('a.check').attr('href', data.url).removeClass('disabled');
+                    }
+                }
+            });
+        }
+    </script>
+{% endblock javascript %}
 
 {% block main %}
     <form role="form" method="post">
         {{ form_widget(form._token) }}
+        <input type="hidden" value="" name="typeCheckCard">
         <div class="c-contentsArea__cols">
             <div class="c-contentsArea__primaryCol">
                 <div class="c-primaryCol">
-                    <div class="card rounded border-0 mb-4">
+                    <div class="credit card rounded border-0 mb-4">
                         <div class="card-header"><span>{{ 'onepay.link_credit_card.title'|trans }}</span></div>
                         <div class="card-body">
                             {% for child in form.children if child.vars.name != '_token' and 'credit_' in child.vars.name  %}
@@ -37,13 +89,13 @@
                             <div class="row">
                                 <div class="col-3"></div>
                                 <div class="col mb-2">
-                                    <button class="btn btn-ec-conversion px-5 ladda-button" type="submit" data-style="expand-right"><span class="ladda-label">Thử kiểm tra</span><span class="ladda-spinner"></span></button>
+                                    <a target="_blank" class="check btn btn-ec-conversion px-5 ladda-button" data-card="credit" href="{{ urlCheckCredit }}">{{ 'onepay.admin.config.btn.trycheck'|trans }}</a>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="card rounded border-0 mb-4">
+                    <div class="domestic card rounded border-0 mb-4">
                         <div class="card-header"><span>{{ 'onepay.link_domestic_card.title'|trans }}</span></div>
                         <div class="card-body">
                             {% for child in form.children if child.vars.name != '_token' and 'domestic_' in child.vars.name %}
@@ -60,6 +112,12 @@
                                     </div>
                                 </div>
                             {% endfor %}
+                            <div class="row">
+                                <div class="col-3"></div>
+                                <div class="col mb-2">
+                                    <a target="_blank" class="check btn btn-ec-conversion px-5 ladda-button" data-card="domestic" href="{{ urlCheckDomestic }}">{{ 'onepay.admin.config.btn.trycheck'|trans }}</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -79,7 +137,7 @@
                     <div class="col-6">
                         <div class="row align-items-center justify-content-end">
                             <div class="col-auto">
-                                <button class="btn btn-ec-conversion px-5" type="submit">{{ 'admin.common.save'|trans }}</button>
+                                <button class="btn btn-ec-conversion px-5" name="saveConfig" value="ok" type="submit">{{ 'admin.common.save'|trans }}</button>
                             </div>
                         </div>
                     </div>

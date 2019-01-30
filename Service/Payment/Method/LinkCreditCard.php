@@ -1,12 +1,28 @@
 <?php
 namespace Plugin\Onepay\Service\Payment\Method;
 
-use Plugin\Onepay\Entity\PaidLogs;
+use Eccube\Entity\Order;
+use Plugin\Onepay\Entity\Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class LinkCreditCard extends RedirectLinkGateway
 {
+    /**
+     * @param Config $Config
+     * @return string
+     */
+    public function checkConn(Config $Config)
+    {
+        $this->isCheck = true;
+        $this->Order = new Order();
+        $this->Order->setTotal(10000);
+        $this->OnepayConfig = $Config;
+        $url = $this->getCallUrl();
+
+        return $url;
+    }
+
     /**
      * {@inheritdoc}
      *
@@ -14,10 +30,7 @@ class LinkCreditCard extends RedirectLinkGateway
      */
     public function getCallUrl()
     {
-        /** @var \Plugin\Onepay\Entity\Config $Config */
-        $Config = $this->configRepository->get();
-
-        $vpcURL = $Config->getCreditCallUrl() . "?";
+        $vpcURL = $this->OnepayConfig->getCreditCallUrl() . "?";
         $params = $this->getParameters();
         $appendAmp = 0;
         foreach($params as $key => $value) {
@@ -31,8 +44,8 @@ class LinkCreditCard extends RedirectLinkGateway
             }
         }
 
-        if (strlen($Config->getCreditSecret()) > 0) {
-            $vpcURL .= "&vpc_SecureHash=" . $this->getSecureHash($params, $Config->getCreditSecret());
+        if (strlen($this->OnepayConfig->getCreditSecret()) > 0) {
+            $vpcURL .= "&vpc_SecureHash=" . $this->getSecureHash($params, $this->OnepayConfig->getCreditSecret());
         }
 
         return $vpcURL;
@@ -40,20 +53,20 @@ class LinkCreditCard extends RedirectLinkGateway
 
     protected function getParameters()
     {
-        /** @var \Plugin\Onepay\Entity\Config $Config */
-        $Config = $this->configRepository->get();
+        $Config = $this->OnepayConfig;
+
         return [
             'vpc_Merchant' => $Config->getCreditMerchantId(),
             'vpc_AccessCode' => $Config->getCreditMerchantAccessCode(),
             'vpc_MerchTxnRef' => $this->getTransactionId(), // transaction id
             'vpc_OrderInfo' => $this->getOrderInfo(),
             'vpc_Amount' => $this->Order->getTotal() * 100,
-            'vpc_ReturnURL' => $this->container->get('router')->generate('onepay_back', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            'vpc_ReturnURL' => $this->getReturnURL(),
             'vpc_Version' => '2',
             'vpc_Command' => 'pay',
             'vpc_Locale' => 'en',
             'vpc_TicketNo' => $_SERVER['REMOTE_ADDR'],
-            'AgainLink' => urlencode($_SERVER['HTTP_REFERER']),
+            'AgainLink' => isset($_SERVER['HTTP_REFERER']) ? urlencode($_SERVER['HTTP_REFERER']) : null,
             'Title' => 'VPC 3-Party',
             'AVS_Street01' => $this->Order->getAddr02(),
             'AVS_City' => $this->Order->getPref() ? $this->Order->getPref()->getName() : '',
@@ -70,6 +83,14 @@ class LinkCreditCard extends RedirectLinkGateway
         ];
     }
 
+    protected function getReturnURL()
+    {
+        if ($this->isCheck){
+            return $this->container->get('router')->generate('onepay_admin_config_check', [], UrlGeneratorInterface::ABSOLUTE_URL);
+        }
+        return $this->container->get('router')->generate('onepay_back', [], UrlGeneratorInterface::ABSOLUTE_URL);
+    }
+
     /**
      * Unique transaction id
      *
@@ -77,6 +98,10 @@ class LinkCreditCard extends RedirectLinkGateway
      */
     protected function getTransactionId()
     {
+        if ($this->isCheck){
+            return md5(date('dmYHis'));
+        }
+
         return $this->Order->getPreOrderId();
     }
 
@@ -87,6 +112,10 @@ class LinkCreditCard extends RedirectLinkGateway
      */
     protected function getOrderInfo()
     {
+        if ($this->isCheck){
+            return self::DOMESTIC_CHECK_ORDER_ID;
+        }
+
         return str_pad($this->Order->getId(), 11, '0', STR_PAD_LEFT);
     }
 
@@ -212,8 +241,7 @@ class LinkCreditCard extends RedirectLinkGateway
      */
     public function handleRequest(Request $request)
     {
-        /** @var \Plugin\Onepay\Entity\Config $Config */
-        $Config = $this->configRepository->get();
+        $Config = $this->OnepayConfig;
         $params = $request->query->all();
 
         log_info('Onepay return', $params);
