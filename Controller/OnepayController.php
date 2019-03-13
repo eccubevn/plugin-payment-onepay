@@ -1,7 +1,6 @@
 <?php
 namespace Plugin\Onepay\Controller;
 
-use Plugin\Onepay\Entity\PaidLogs;
 use Plugin\Onepay\Repository\PaidLogsRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;

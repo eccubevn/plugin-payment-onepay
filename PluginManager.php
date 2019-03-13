@@ -69,7 +69,7 @@ class PluginManager extends AbstractPluginManager
     public function uninstall(array $meta, ContainerInterface $container)
     {
         $this->container = $container;
-//        $this->removeConfig();
+        $this->removeConfig();
     }
 
     /**
@@ -98,6 +98,7 @@ class PluginManager extends AbstractPluginManager
             $Payment->setMethodClass(LinkCreditCard::class);
         }
         $entityManager->persist($Payment);
+        $entityManager->flush();
 
         $Payment = $paymentRepository->findOneBy(['method_class' => LinkDomesticCard::class]);
         if ($Payment instanceof Payment) {

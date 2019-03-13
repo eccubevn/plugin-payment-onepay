@@ -59,6 +59,7 @@ class ConfigController extends AbstractController
         $form = $this->createForm(ConfigType::class, $Config);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $Config = $form->getData();
             $typeCheckCard = $request->get('typeCheckCard');
             if ($request->isXmlHttpRequest() && $typeCheckCard) {
                 if ($typeCheckCard == 'credit'){
