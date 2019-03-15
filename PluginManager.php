@@ -94,7 +94,7 @@ class PluginManager extends AbstractPluginManager
             $Payment->setCharge(0);
             $Payment->setSortNo($sortNo);
             $Payment->setVisible(false);
-            $Payment->setMethod('Thanh toán bằng thẻ quốc tế');
+            $Payment->setMethod('OnePAY - Thanh toán bằng thẻ quốc tế');
             $Payment->setMethodClass(LinkCreditCard::class);
         }
         $entityManager->persist($Payment);
@@ -111,7 +111,7 @@ class PluginManager extends AbstractPluginManager
             $Payment->setCharge(0);
             $Payment->setSortNo($sortNo);
             $Payment->setVisible(false);
-            $Payment->setMethod('Thanh toán bằng thẻ nội địa');
+            $Payment->setMethod('OnePAY - Thanh toán bằng thẻ nội địa');
             $Payment->setMethodClass(LinkDomesticCard::class);
         }
 
